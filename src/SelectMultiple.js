@@ -30,6 +30,7 @@ export default class SelectMultiple extends Component {
 
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
+    renderCheckbox: PropTypes.func,
     renderLabel: PropTypes.func,
     flatListProps: PropTypes.any,
     style: styleType,
@@ -52,6 +53,7 @@ export default class SelectMultiple extends Component {
     maxSelect: null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
+    renderCheckbox: null,
     renderLabel: null
   }
 
@@ -126,6 +128,28 @@ export default class SelectMultiple extends Component {
     )
   }
 
+  renderCheckbox = (style, selected) => {
+    if (this.props.renderCheckbox) {
+      return this.props.renderCheckbox(style, selected)
+    } else {
+      let {
+        checkboxSource
+      } = this.props
+
+      const {
+        selectedCheckboxSource
+      } = this.props
+
+      if (selected) {
+        checkboxSource = selectedCheckboxSource
+      }
+
+      return (
+          <Image style={style} source={checkboxSource} />
+        )
+    }
+  }
+
   renderLabel = (label, style, selected) => {
     if (this.props.renderLabel) {
       return this.props.renderLabel(label, style, selected)
@@ -137,21 +161,18 @@ export default class SelectMultiple extends Component {
 
   renderItemRow = (row) => {
     let {
-      checkboxSource,
       rowStyle,
       labelStyle,
       checkboxStyle
     } = this.props
 
     const {
-      selectedCheckboxSource,
       selectedRowStyle,
       selectedCheckboxStyle,
       selectedLabelStyle
     } = this.props
 
     if (row.item.selected) {
-      checkboxSource = selectedCheckboxSource
       rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
       checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
       labelStyle = mergeStyles(styles.label, labelStyle, selectedLabelStyle)
@@ -164,7 +185,7 @@ export default class SelectMultiple extends Component {
     return (
       <TouchableWithoutFeedback onPress={() => this.onRowPress(row.item)}>
         <View style={rowStyle}>
-          <Image style={checkboxStyle} source={checkboxSource} />
+          {this.renderCheckbox(checkboxStyle, row.item.selected)}
           {this.renderLabel(row.item.label, labelStyle, row.item.selected)}
         </View>
       </TouchableWithoutFeedback>

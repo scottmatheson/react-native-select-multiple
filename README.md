@@ -118,6 +118,7 @@ class App extends Component {
 | selectedRowStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/view.html#style) for the row container when selected. |
 | selectedCheckboxStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/image.html#style) for the checkbox image when selected. |
 | selectedLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when selected. |
+| renderCheckbox | null | `func` | Function for render checkbox. |
 | renderLabel | null | `func` | Function for render label. |
 | maxSelect | null | `int` | Maximum number of selected items|
 
